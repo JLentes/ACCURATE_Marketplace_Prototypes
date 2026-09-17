@@ -1,0 +1,82 @@
+@prefix data: <http://accurate.de.iao.fraunhofer.de/ontologies/ACCURATE#> .
+@prefix accurate-core: <http://accurate.de.iao.fraunhofer.de/ontologies/accurate-core#> .
+@prefix accurate-match: <http://accurate.de.iao.fraunhofer.de/ontologies/accurate-requirement-matching-core#> .
+@prefix accurate-parts: <http://accurate.de.iao.fraunhofer.de/ontologies/accurate-parts-core#> .
+@prefix qudt: <http://qudt.org/schema/qudt/> .
+@prefix unit: <http://qudt.org/vocab/unit/> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl: <http://www.w3.org/2002/07/owl#> .
+@prefix xsd: <http://www.w3.org/2001/XMLSchema#> .
+
+data:ACCURATE_Matchmaking_Demo_Compatible a owl:Ontology ; rdfs:label "ACCURATE compatible matchmaking demo data"@en .
+
+# Shared symbolic individuals
+data:Titanium a accurate-parts:Material .
+data:Ti6Al4V a accurate-parts:Material .
+data:Aluminium a accurate-parts:Material .
+data:Steel a accurate-parts:Material .
+data:AS9100 a accurate-parts:Certification .
+data:ISO13485 a accurate-parts:Certification .
+data:Anodizing a accurate-core:Entity .
+
+# P1 Aerospace shaft
+data:P1_HighPrecisionAerospaceShaft a accurate-parts:Product ; rdfs:label "High Precision Aerospace Shaft"@en ; accurate-match:hasRequirementSet data:P1_RequirementSet .
+data:P1_RequirementSet a accurate-match:RequirementSet ; accurate-match:hasRequirement data:P1_Req_Tolerance, data:P1_Req_Material, data:P1_Req_Certification .
+data:P1_ToleranceValue a qudt:QuantityValue ; qudt:numericValue "0.005"^^xsd:double ; qudt:unit unit:MilliM .
+data:P1_Req_Tolerance a accurate-match:InclusiveMaximumRequirement ; rdfs:label "Maximum tolerance 0.005 mm"@en ; accurate-match:hasReferenceValue data:P1_ToleranceValue .
+data:P1_Req_Material a accurate-match:UnquantifiedRequirement ; rdfs:label "Ti-6Al-4V required"@en ; accurate-match:hasReferenceValue data:Ti6Al4V .
+data:P1_Req_Certification a accurate-match:UnquantifiedRequirement ; rdfs:label "AS9100 required"@en ; accurate-match:hasReferenceValue data:AS9100 .
+
+# P2 Medical component
+data:P2_MedicalImplantComponent a accurate-parts:Product ; rdfs:label "Medical Implant Component"@en ; accurate-match:hasRequirementSet data:P2_RequirementSet .
+data:P2_RequirementSet a accurate-match:RequirementSet ; accurate-match:hasRequirement data:P2_Req_Tolerance, data:P2_Req_Material, data:P2_Req_Certification .
+data:P2_ToleranceValue a qudt:QuantityValue ; qudt:numericValue "0.01"^^xsd:double ; qudt:unit unit:MilliM .
+data:P2_Req_Tolerance a accurate-match:InclusiveMaximumRequirement ; rdfs:label "Maximum tolerance 0.01 mm"@en ; accurate-match:hasReferenceValue data:P2_ToleranceValue .
+data:P2_Req_Material a accurate-match:UnquantifiedRequirement ; rdfs:label "Titanium required"@en ; accurate-match:hasReferenceValue data:Titanium .
+data:P2_Req_Certification a accurate-match:UnquantifiedRequirement ; rdfs:label "ISO 13485 required"@en ; accurate-match:hasReferenceValue data:ISO13485 .
+
+# P3 Automotive housing
+data:P3_AutomotiveSensorHousing a accurate-parts:Product ; rdfs:label "Automotive Sensor Housing"@en ; accurate-match:hasRequirementSet data:P3_RequirementSet .
+data:P3_RequirementSet a accurate-match:RequirementSet ; accurate-match:hasRequirement data:P3_Req_Tolerance, data:P3_Req_Material, data:P3_Req_Treatment .
+data:P3_ToleranceValue a qudt:QuantityValue ; qudt:numericValue "0.05"^^xsd:double ; qudt:unit unit:MilliM .
+data:P3_Req_Tolerance a accurate-match:InclusiveMaximumRequirement ; rdfs:label "Maximum tolerance 0.05 mm"@en ; accurate-match:hasReferenceValue data:P3_ToleranceValue .
+data:P3_Req_Material a accurate-match:UnquantifiedRequirement ; rdfs:label "Aluminium required"@en ; accurate-match:hasReferenceValue data:Aluminium .
+data:P3_Req_Treatment a accurate-match:UnquantifiedRequirement ; rdfs:label "Anodizing required"@en ; accurate-match:hasReferenceValue data:Anodizing .
+
+# S1 Aerospace service
+data:S1_PrecisionAerospaceMachining a accurate-match:Service ; rdfs:label "Precision Aerospace Machining Service"@en ; accurate-match:hasCharacteristic data:S1_Char_Tolerance, data:S1_Char_Material, data:S1_Char_Certification .
+data:S1_ToleranceValue a qudt:QuantityValue ; qudt:numericValue "0.002"^^xsd:double ; qudt:unit unit:MilliM .
+data:S1_Char_Tolerance a accurate-match:QuantifiedCharacteristic ; accurate-match:hasQuantity data:S1_ToleranceValue .
+data:S1_Char_Material a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:Ti6Al4V .
+data:S1_Char_Certification a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:AS9100 .
+
+# S2 Medical service
+data:S2_MedicalComponentsManufacturing a accurate-match:Service ; rdfs:label "Medical Components Manufacturing"@en ; accurate-match:hasCharacteristic data:S2_Char_Tolerance, data:S2_Char_Material, data:S2_Char_Certification .
+data:S2_ToleranceValue a qudt:QuantityValue ; qudt:numericValue "0.005"^^xsd:double ; qudt:unit unit:MilliM .
+data:S2_Char_Tolerance a accurate-match:QuantifiedCharacteristic ; accurate-match:hasQuantity data:S2_ToleranceValue .
+data:S2_Char_Material a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:Titanium .
+data:S2_Char_Certification a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:ISO13485 .
+
+# S3 Automotive service
+data:S3_AutomotiveMetalPartsSupplier a accurate-match:Service ; rdfs:label "Automotive Metal Parts Supplier"@en ; accurate-match:hasCharacteristic data:S3_Char_Tolerance, data:S3_Char_Material, data:S3_Char_Treatment .
+data:S3_ToleranceValue a qudt:QuantityValue ; qudt:numericValue "0.03"^^xsd:double ; qudt:unit unit:MilliM .
+data:S3_Char_Tolerance a accurate-match:QuantifiedCharacteristic ; accurate-match:hasQuantity data:S3_ToleranceValue .
+data:S3_Char_Material a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:Aluminium .
+data:S3_Char_Treatment a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:Anodizing .
+
+# S4 Deliberately weak candidate
+data:S4_GeneralCNCService a accurate-match:Service ; rdfs:label "General CNC Service"@en ; accurate-match:hasCharacteristic data:S4_Char_Tolerance, data:S4_Char_Material .
+data:S4_ToleranceValue a qudt:QuantityValue ; qudt:numericValue "0.05"^^xsd:double ; qudt:unit unit:MilliM .
+data:S4_Char_Tolerance a accurate-match:QuantifiedCharacteristic ; accurate-match:hasQuantity data:S4_ToleranceValue .
+data:S4_Char_Material a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:Steel .
+
+# S5 Multi-domain hub
+data:S5_EuropeanAdvancedManufacturingHub a accurate-match:Service ; rdfs:label "European Advanced Manufacturing Hub"@en ; accurate-match:hasCharacteristic data:S5_Char_Tolerance, data:S5_Char_Titanium, data:S5_Char_Aluminium, data:S5_Char_AS9100, data:S5_Char_ISO13485, data:S5_Char_Treatment .
+data:S5_ToleranceValue a qudt:QuantityValue ; qudt:numericValue "0.01"^^xsd:double ; qudt:unit unit:MilliM .
+data:S5_Char_Tolerance a accurate-match:QuantifiedCharacteristic ; accurate-match:hasQuantity data:S5_ToleranceValue .
+data:S5_Char_Titanium a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:Titanium .
+data:S5_Char_Aluminium a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:Aluminium .
+data:S5_Char_AS9100 a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:AS9100 .
+data:S5_Char_ISO13485 a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:ISO13485 .
+data:S5_Char_Treatment a accurate-match:UnquantifiedCharacteristic ; accurate-match:hasCharacteristicValue data:Anodizing .
